@@ -1,0 +1,4 @@
+src/InputFetcher.py
+.idea
+*.egg-info
+adventofcode.iml
