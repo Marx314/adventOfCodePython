@@ -1,0 +1,29 @@
+from itertools import permutations
+
+
+class Day9:
+
+    def __init__(self):
+        pass
+
+    def calc(self, instructions, method=min):
+        graph = {}
+        cities = set()
+        for instruction in instructions:
+            result = instruction.split(' ')
+            cities.add(result[0])
+            cities.add(result[2])
+            graph[(result[0], result[2])] = int(result[4])
+            graph[(result[2], result[0])] = int(result[4])
+
+        paths = self.generate_path(cities)
+        cost_effective_path = dict()
+        for path in paths:
+            cost_effective_path[self.calculate(list(path), graph)] = path
+        return method(cost_effective_path.keys())
+
+    def generate_path(self, cities):
+        return [perm for i,perm in enumerate(permutations(cities))]
+
+    def calculate(self, path, short_path):
+        return sum([short_path[(path[i], path[i+1])] for i in xrange(len(path)-1)])
