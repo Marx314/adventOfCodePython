@@ -1,20 +1,31 @@
 from unittest import TestCase
-from src.Day9 import Day9
+from src.Day10 import Day10
 
 
-class Day9Test(TestCase):
+class Day10Test(TestCase):
     def setUp(self):
-        self.day = Day9()
+        self.day = Day10()
 
     def tearDown(self):
         pass
 
-    def test_empty_string(self):
-        instructions = [
-            'London to Dublin = 464',
-            'London to Belfast = 518',
-            'Dublin to Belfast = 141',
-        ]
-        self.assertEqual(605, self.day.calc(instructions))
+    def test_one_one(self):
+        self.assertEqual(len('11'), self.day.look_and_say_length('1'))
+        self.assertEqual(len('21'), self.day.look_and_say_length('11'))
+        self.assertEqual(len('1211'), self.day.look_and_say_length('21'))
+        self.assertEqual(len('111221'), self.day.look_and_say_length('1211'))
+        self.assertEqual(len('312211'), self.day.look_and_say_length('111221'))
 
+        self.assertEqual(len('312211'), self.day.look_and_say_length('1', 5))
+        self.assertEqual(492982, self.day.look_and_say_length('1321131112', 40))
+        self.assertEqual(6989950, self.day.look_and_say_length('1321131112', 50))
 
+    def test_return_lookAndSayLength(self):
+        self.assertEqual(904, self.day.look_and_say_length('1', 23))
+
+    def test_puzzle(self):
+        self.assertEqual(492982, self.day.look_and_say_length(self.puzzle(), repeat=40))
+        self.assertEqual(6989950, self.day.look_and_say_length(self.puzzle(), repeat=50))
+
+    def puzzle(self):
+        return '1321131112'

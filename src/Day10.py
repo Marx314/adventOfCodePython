@@ -1,45 +1,15 @@
-import networkx as nx
-from networkx import shortest_path_length
-from src.InputFetcher import InputFetcher
+import re
 
 
-class Day9:
-
+class Day10:
     def __init__(self):
         pass
 
-    def calc(self, instructions):
-        print instructions
-        return
-        graph = nx.Graph()
-        for instruction in instructions:
-            result = instruction.split(' ')
-            graph.add_node(result[0])
-            graph.add_node(result[2])
-            graph.add_edge(result[0], result[2], weight=int(result[4]))
-            graph.add_edge(result[2], result[0], weight=int(result[4]))
+    def look_and_say_length(self, instruction, repeat=1):
+        for i in xrange(repeat):
+            new_instruction = self._look_and_say_one(instruction)
+            instruction = new_instruction
+        return len(instruction)
 
-        #paths = shortest_path_length(graph, weight="weight")
-        #print paths
-        paths = nx.johnson(graph, weight='weight')
-        #paths = nx.johnson(graph, weight='weight')
-        print paths
-
-        length = 100000000
-        for source, path in paths.iteritems():
-            print "city : {0} length {1}".format(source, 0)
-            print path
-
-
-        return length
-
-    @staticmethod
-    def run():
-        data = InputFetcher.fetch_input(9).split('\n')
-        day = Day9()
-        print data
-        print day.calc(data)
-
-
-
-Day9.run()
+    def _look_and_say_one(self, instruction):
+        return re.sub(r'(.)\1*', lambda m: str(len(m.group(0))) + m.group(1), instruction)

@@ -7,7 +7,7 @@ class Day4:
 
     def calc(self, key, n=5):
         result = 0
-        zeros = "0"*n
+        zeros = "0" * n
         for i in xrange(100000000):
             digest = hashlib.md5("{0}{1}".format(key, i)).hexdigest()
             if digest[0:n] == zeros:
@@ -18,4 +18,3 @@ class Day4:
 
     def calc6(self, key):
         return self.calc(key, n=6)
-

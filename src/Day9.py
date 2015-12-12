@@ -1,11 +1,12 @@
 from itertools import permutations
+from src import split_data
 
 
 class Day9:
-
     def __init__(self):
         pass
 
+    @split_data
     def calc(self, instructions, method=min):
         graph = {}
         cities = set()
@@ -23,7 +24,7 @@ class Day9:
         return method(cost_effective_path.keys())
 
     def generate_path(self, cities):
-        return [perm for i,perm in enumerate(permutations(cities))]
+        return [perm for i, perm in enumerate(permutations(cities))]
 
-    def calculate(self, path, short_path):
-        return sum([short_path[(path[i], path[i+1])] for i in xrange(len(path)-1)])
+    def calculate(self, path, graph):
+        return sum([graph[(path[i], path[i + 1])] for i in xrange(len(path) - 1)])

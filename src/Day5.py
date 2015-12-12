@@ -1,12 +1,13 @@
 import re
+from src import split_data
 
 
 class Day5:
     def __init__(self):
         pass
 
+    @split_data
     def nice(self, strings):
-        strings = strings.split('\n')
         count = 0
         vowels = "aeiou"
         bad_sequences = ['ab', 'cd', 'pq', 'xy']
@@ -18,7 +19,7 @@ class Day5:
                 vowels_count += string.count(vowel)
 
             for letter in set(string):
-                if letter*2 in string:
+                if letter * 2 in string:
                     double_letter += 1
             for bad_sequence in bad_sequences:
                 if bad_sequence in string:
@@ -29,8 +30,8 @@ class Day5:
 
         return count
 
+    @split_data
     def niceToo(self, strings):
-        strings = strings.split('\n')
         count = 0
         for string in strings:
             legal_pair = self._legal_pair(string)
@@ -41,7 +42,7 @@ class Day5:
         return count
 
     def _legal_pair(self, string):
-        pairs = list(set([string[i:i+2] for i in range(0, len(string)-1)]))
+        pairs = list(set([string[i:i + 2] for i in range(0, len(string) - 1)]))
         for pair in pairs:
             if string.count(pair) > 1:
                 return True

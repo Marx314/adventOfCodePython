@@ -1,25 +1,33 @@
 from unittest import TestCase
-from src.Day10 import Day10
+from src.Day11 import Day11
 
 
-class Day10Test(TestCase):
+class Day11Test(TestCase):
     def setUp(self):
-        self.day = Day10()
+        self.day = Day11()
 
     def tearDown(self):
         pass
 
-    def test_one_one(self):
-        self.assertEqual(len('11'), self.day.look_and_say_length('1'))
-        self.assertEqual(len('21'), self.day.look_and_say_length('11'))
-        self.assertEqual(len('1211'), self.day.look_and_say_length('21'))
-        self.assertEqual(len('111221'), self.day.look_and_say_length('1211'))
-        self.assertEqual(len('312211'), self.day.look_and_say_length('111221'))
+    def test_requirement(self):
+        self.assertEqual(True, self.day.is_valid('ghjaabcc'))
 
-        self.assertEqual(len('312211'), self.day.look_and_say_length('1', 5))
-        self.assertEqual(492982, self.day.look_and_say_length('1321131112', 40))
-        self.assertEqual(6989950, self.day.look_and_say_length('1321131112', 50))
+        self.assertEqual(True, self.day.first_requirement('hijklmmn'))
+        self.assertEqual(False, self.day.second_requirement('hijklmmn'))
+        self.assertEqual(False, self.day.third_requirement('hijklmmn'))
 
-    def test_return_lookAndSayLength(self):
-        self.assertEqual(16, len(self.day.lookAndSay('1', 23)))
+        self.assertEqual(False, self.day.first_requirement('abbceffg'))
+        self.assertEqual(True, self.day.second_requirement('abbceffg'))
+        self.assertEqual(True, self.day.third_requirement('abbceffg'))
 
+        self.assertEqual(False, self.day.first_requirement('abbcegjk'))
+        self.assertEqual(True, self.day.second_requirement('abbcegjk'))
+        self.assertEqual(False, self.day.third_requirement('abbcegjk'))
+
+    def test_generation(self):
+        self.assertEqual('ghjaabcc', self.day.generate('ghijklmn'))
+        self.assertEqual('abcdffaa', self.day.generate('abcdefgh'))
+
+    def test_puzzle(self):
+        self.assertEqual('hxbxxyzz', self.day.generate('hxbxwxba'))
+        self.assertEqual('hxcaabcc', self.day.generate('hxbxxyzz'))

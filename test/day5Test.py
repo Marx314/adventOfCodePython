@@ -30,9 +30,6 @@ class Day5Test(TestCase):
         self.assertEqual(0, self.day.niceToo('uurcxstgmygtbstg'))
         self.assertEqual(0, self.day.niceToo('ieodomkazucvgmuy'))
 
-    def test_demarde(self):
-        self.assertEqual(1, self.day.niceToo('rxexcbwhiywwwwnu'))
-
     def test_puzzle(self):
         self.assertEqual(236, self.day.nice(self.puzzle()))
         self.assertEqual(51, self.day.niceToo(self.puzzle()))

@@ -1,5 +1,5 @@
 import re
-from src.InputFetcher import InputFetcher
+from src import split_data
 
 
 class Day7:
@@ -10,15 +10,15 @@ class Day7:
         pass
 
     def calc(self, instructions):
-        result = self._apply_operations(instructions)
+        result = self.apply_operations(instructions)
         return result['a']
 
     def calc_b(self, instructions):
-        instructions.remove('1674 -> b')
-        instructions.append('46065 -> b')
+        instructions = instructions.replace('1674 -> b', '46065 -> b')
         return self.calc(instructions)
 
-    def _apply_operations(self, instructions):
+    @split_data
+    def apply_operations(self, instructions):
         un_executed_instructions = []
         operation = {}
         self._execute_pass(instructions, operation, un_executed_instructions)
@@ -66,14 +66,6 @@ class Day7:
                 operation[result[6]] = value
             else:
                 un_executed_instructions.append(instruction)
-
-    @staticmethod
-    def run():
-        data = InputFetcher.fetch_input(7).split('\n')
-        day = Day7()
-        print data
-        print day.calc(data)
-        print day.calc_b(data)
 
 
 class YOLO(Exception):
