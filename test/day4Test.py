@@ -10,9 +10,12 @@ class Day4Test(TestCase):
         pass
 
     def test_keys_simple(self):
-        key = 'abcdef'
-        self.assertEqual('609043', self.day.calc(key))
-        key = 'pqrstuv'
-        self.assertEqual('1048970', self.day.calc(key))
+        self.assertEqual('609043', self.day.calc('abcdef'))
+        self.assertEqual('1048970', self.day.calc('pqrstuv'))
 
+    def test_puzzle(self):
+        self.assertEqual('282749', self.day.calc(self.puzzle()))
+        self.assertEqual('9962624', self.day.calc6(self.puzzle()))
 
+    def puzzle(self):
+        return 'yzbqklnj'

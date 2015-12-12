@@ -1,11 +1,8 @@
-from src.InputFetcher import InputFetcher
-
-
 class Day3:
     def __init__(self):
         pass
 
-    def calc(self, data):
+    def one_santa(self, data):
         position = [0, 0]
         santa_map = {0: {0: 1}}
         for direction in data:
@@ -53,12 +50,3 @@ class Day3:
             position[0] -= 1
         self._create_position_if_needed(santa_map, position)
         santa_map[position[0]][position[1]] += 1
-
-    @staticmethod
-    def run():
-        data = InputFetcher.fetch_input(3)
-        day = Day3()
-        print data
-        print day.calc(data)
-        print day.two_santa(data)
-Day3.run()

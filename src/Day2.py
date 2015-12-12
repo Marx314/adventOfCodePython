@@ -1,6 +1,3 @@
-from src.InputFetcher import InputFetcher
-
-
 class Day2:
     def __init__(self):
         pass
@@ -19,11 +16,3 @@ class Day2:
             wrap = 2*sum(present_size)
             length += bow + wrap
         return length
-
-    @staticmethod
-    def run():
-        data = InputFetcher.fetch_input(2).split('\n')
-        day = Day2()
-        print data
-        print day.calc(data)
-        print day.ribbon(data)

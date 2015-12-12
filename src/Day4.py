@@ -1,5 +1,4 @@
 import hashlib
-from src.InputFetcher import InputFetcher
 
 
 class Day4:
@@ -19,12 +18,4 @@ class Day4:
 
     def calc6(self, key):
         return self.calc(key, n=6)
-
-    @staticmethod
-    def run():
-        data = InputFetcher.fetch_input(4).split('\n')
-        day = Day4()
-        print data
-        print day.calc(data)
-        print day.calc6(data)
 

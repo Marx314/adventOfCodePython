@@ -1,6 +1,3 @@
-from src.InputFetcher import InputFetcher
-
-
 class Day1:
     def __init__(self):
         pass
@@ -21,13 +18,3 @@ class Day1:
                 i -= 1
 
         return count
-
-    @staticmethod
-    def run():
-        data = InputFetcher.fetch_input(1)
-        day = Day1()
-        print data
-        print day.calc(data)
-        print day.floor(data)
-
-Day1.run()

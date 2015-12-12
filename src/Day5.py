@@ -1,16 +1,16 @@
 import re
-from src.InputFetcher import InputFetcher
 
 
 class Day5:
     def __init__(self):
         pass
 
-    def nice(self, keys):
+    def nice(self, strings):
+        strings = strings.split('\n')
         count = 0
         vowels = "aeiou"
         bad_sequences = ['ab', 'cd', 'pq', 'xy']
-        for string in keys:
+        for string in strings:
             vowels_count = 0
             double_letter = 0
             bad_seq = 0
@@ -30,6 +30,7 @@ class Day5:
         return count
 
     def niceToo(self, strings):
+        strings = strings.split('\n')
         count = 0
         for string in strings:
             legal_pair = self._legal_pair(string)
@@ -55,12 +56,3 @@ class Day5:
                 return True
 
         return False
-
-    @staticmethod
-    def run():
-        data = InputFetcher.fetch_input(5).split('\n')
-        day = Day5()
-        print data
-        print day.nice(data)
-        print day.niceToo(data)
-
