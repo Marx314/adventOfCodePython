@@ -15,10 +15,7 @@ class Day10Test(TestCase):
         self.assertEqual(len('1211'), self.day.look_and_say_length('21'))
         self.assertEqual(len('111221'), self.day.look_and_say_length('1211'))
         self.assertEqual(len('312211'), self.day.look_and_say_length('111221'))
-
         self.assertEqual(len('312211'), self.day.look_and_say_length('1', 5))
-        self.assertEqual(492982, self.day.look_and_say_length('1321131112', 40))
-        self.assertEqual(6989950, self.day.look_and_say_length('1321131112', 50))
 
     def test_return_lookAndSayLength(self):
         self.assertEqual(904, self.day.look_and_say_length('1', 23))
