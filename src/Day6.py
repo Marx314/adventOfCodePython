@@ -1,5 +1,4 @@
 import re
-from src.InputFetcher import InputFetcher
 
 
 class Day6:
@@ -7,8 +6,8 @@ class Day6:
         pass
 
     def calc(self, instructions):
-        n = 1000
-        lights_map = [[0 for x in xrange(n)] for x in xrange(n)]
+        instructions = self._process_instruction_in_list(instructions)
+        lights_map = self._build_light_maps()
         for instruction in instructions:
             result = self._transform_data(instruction)
             do, end, start = self._get_instruction_start_end(result)
@@ -17,14 +16,22 @@ class Day6:
         return self._how_many_on(lights_map)
 
     def calc_bright(self, instructions):
-        n = 1000
-        lights_map = [[0 for x in xrange(n)] for x in xrange(n)]
+        instructions = self._process_instruction_in_list(instructions)
+        lights_map = self._build_light_maps()
         for instruction in instructions:
             result = self._transform_data(instruction)
             do, end, start = self._get_instruction_start_end(result)
             self._apply_bright(do, start, end, lights_map)
 
         return self._how_many_on(lights_map)
+
+    def _build_light_maps(self):
+        n = 1000
+        lights_map = [[0 for x in xrange(n)] for y in xrange(n)]
+        return lights_map
+
+    def _process_instruction_in_list(self, instructions):
+        return instructions.split('\n')
 
     def _how_many_on(self, light_map):
         calc = sum([sum(line) for line in light_map])
@@ -61,10 +68,3 @@ class Day6:
         result = re.split(pattern, instruction)
         return result
 
-    @staticmethod
-    def run():
-        data = InputFetcher.fetch_input(6).split('\n')
-        day = Day6()
-        print data
-        print day.calc(data)
-        print day.calc_bright(data)
