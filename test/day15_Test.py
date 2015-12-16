@@ -1,6 +1,4 @@
 from unittest import TestCase
-from src.Day13 import Day13
-from src.Day14 import Day14
 from src.Day15 import Day15
 
 
