@@ -1,5 +1,4 @@
 from unittest import TestCase
-from math import sqrt, ceil
 from src.Day20 import Day20
 
 
