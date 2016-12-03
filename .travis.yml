@@ -1,5 +1,7 @@
-anguage: python
+language: python
+sudo: false
+language: python
 python:
-    - '3.4'
-script:
-    - tox -r
+  - "3.4"
+install: pip install tox-travis
+script: tox
