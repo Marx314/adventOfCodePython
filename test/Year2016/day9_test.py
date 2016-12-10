@@ -38,7 +38,7 @@ class Day9Test(TestCase):
         encrypted = '(3x3)XYZ'
         self.assertEqual(self.day.decrypt_v2(encrypted)[0], 9)
         self.assertEqual(self.day.decrypt_v2(encrypted, True)[1], 'XYZXYZXYZ')
-        encrypted = 'X(3x3)ABC(3x3)ABCY'
+        encrypted = 'X(8x2)(3x3)ABCY'
         self.assertEqual(self.day.decrypt_v2(encrypted)[0], 20)
         self.assertEqual(self.day.decrypt_v2(encrypted, True)[1], 'XABCABCABCABCABCABCY')
         encrypted = '(27x12)(20x12)(13x14)(7x10)(1x12)A'
