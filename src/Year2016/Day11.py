@@ -5,7 +5,7 @@ import copy
 
 class Day11(object):
     def heuristic(self, new_floor_plan, current, cost_so_far):
-        return (len(new_floor_plan._[3]['g']) + len(new_floor_plan._[3]['m'])) * -2
+        return (len(new_floor_plan.floor_plan[3]['g']) + len(new_floor_plan.floor_plan[3]['m'])) * -2
 
     def a_star_search(self, floor_plan):
         # A* from http://www.redblobgames.com/pathfinding/a-star/implementation.html#python-astar
@@ -27,6 +27,8 @@ class Day11(object):
             for move in moves:
                 for direction in directions[floor]:
                     new_floor_plan = self.apply_move(floor, direction, floor_plan, move)
+                    if (floor+direction, new_floor_plan) in cost_so_far:
+                        continue
                     if not self.valid_floor(new_floor_plan.floor_plan[floor]):
                         continue
                     if not self.valid_floor(new_floor_plan.floor_plan[floor + direction]):
@@ -43,10 +45,10 @@ class Day11(object):
 
     @staticmethod
     def generate_move(floor, floor_plan, count=2):
-        return list(itertools.combinations(floor_plan._[floor]['g'] + floor_plan._[floor]['m'], count))
+        return list(itertools.combinations(floor_plan.floor_plan[floor]['g'] + floor_plan.floor_plan[floor]['m'], count))
 
     def apply_move(self, current_floor, direction, floor_plan, moves):
-        new_floor_plan = FloorPlan(copy.deepcopy(floor_plan._))
+        new_floor_plan = FloorPlan(copy.deepcopy(floor_plan.floor_plan))
         for move in moves:
             if move in new_floor_plan.floor_plan[current_floor]['g']:
                 self.move(move, new_floor_plan.floor_plan, current_floor, 'g', direction)
