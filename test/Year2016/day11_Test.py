@@ -1,4 +1,5 @@
 from unittest import TestCase
+import unittest
 
 import re
 from src import split_data
@@ -24,12 +25,13 @@ The fourth floor contains nothing relevant.'''
         states = self.build_state(came_from, cost_so_far, current)
         self.assertEqual(len(states), 31)
 
+    @unittest.skip("Take about an hour to run with current heuristic")
     def test_puzzle_part2(self):
         floor_plan = self.generate_initial(self.puzzle())
-        floor_plan._[0]['g'].append(1)
-        floor_plan._[0]['g'].append(2)
-        floor_plan._[0]['m'].append(1)
-        floor_plan._[0]['m'].append(2)
+        floor_plan.floor_plan[0]['g'].append(1)
+        floor_plan.floor_plan[0]['g'].append(2)
+        floor_plan.floor_plan[0]['m'].append(1)
+        floor_plan.floor_plan[0]['m'].append(2)
         cost_so_far, came_from, current = self.day.a_star_search(floor_plan)
         states = self.build_state(came_from, cost_so_far, current)
         self.assertEqual(len(states), 55)
