@@ -64,11 +64,11 @@ class Day11(object):
 
     @staticmethod
     def valid_floor(floor):
-        generators = sorted(floor['g'])
+        generators = sorted(map(lambda x: -x, floor['g']))
         microchips = sorted(floor['m'])
         no_generator = len(generators) == 0
 
-        return generators == microchips or no_generator or all(m in generators for m in microchips)
+        return generators == microchips or no_generator or all([m in generators for m in microchips])
 
 
 class FloorPlan(object):

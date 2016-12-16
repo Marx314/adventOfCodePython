@@ -28,8 +28,8 @@ The fourth floor contains nothing relevant.'''
     @unittest.skip("Take about an hour to run with current heuristic")
     def test_puzzle_part2(self):
         floor_plan = self.generate_initial(self.puzzle())
-        floor_plan.floor_plan[0]['g'].append(1)
-        floor_plan.floor_plan[0]['g'].append(2)
+        floor_plan.floor_plan[0]['g'].append(-1)
+        floor_plan.floor_plan[0]['g'].append(-2)
         floor_plan.floor_plan[0]['m'].append(1)
         floor_plan.floor_plan[0]['m'].append(2)
         cost_so_far, came_from, current = self.day.a_star_search(floor_plan)
@@ -57,7 +57,7 @@ The fourth floor contains nothing relevant.'''
                 if composant[2] == 'microchip':
                     floor_plan_list[floor]['m'].append(element[re.findall('\w*', composant[0])[0]])
                 elif composant[2] == 'generator':
-                    floor_plan_list[floor]['g'].append(element[re.findall('\w*', composant[0])[0]])
+                    floor_plan_list[floor]['g'].append(-element[re.findall('\w*', composant[0])[0]])
 
         return FloorPlan(floor_plan_list)
 
