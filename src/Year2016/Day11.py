@@ -1,51 +1,62 @@
 import itertools
-from queue import PriorityQueue
+import re
 import copy
+from src import split_data
+from src.AStarSearch import AStarSearch
 
 
-class Day11(object):
-    def heuristic(self, new_floor_plan, current, cost_so_far):
-        return (len(new_floor_plan.floor_plan[3]['g']) + len(new_floor_plan.floor_plan[3]['m'])) * -2
+class Day11(AStarSearch):
+    directions = {0: [1], 1: [-1, 1], 2: [-1, 1], 3: [-1]}
 
-    def a_star_search(self, floor_plan):
-        # A* from http://www.redblobgames.com/pathfinding/a-star/implementation.html#python-astar
-        frontier = PriorityQueue()
-        floor = 0
-        current = (floor, floor_plan)
-        frontier.put((0, current))
-        came_from = {current: None}
-        cost_so_far = {current: 0}
-        directions = {0: [1], 1: [-1, 1], 2: [-1, 1], 3: [-1]}
+    @split_data
+    def generate_initial(self, instructions):
+        floor_plan_list = [{'m': [], 'g': []} for _ in range(4)]
+        element = {'hydrogen': 1, 'lithium': 2, 'thulium': 3, 'plutonium': 4, 'strontium': 5, 'promethium': 6,
+                   'ruthenium': 7}
+        for floor, instruction in enumerate(instructions):
+            result = re.findall(r'((\w*\-?)*\s(microchip|generator))', instruction)
+            for composant in result:
+                if composant[2] == 'microchip':
+                    floor_plan_list[floor]['m'].append(element[re.findall('\w*', composant[0])[0]])
+                elif composant[2] == 'generator':
+                    floor_plan_list[floor]['g'].append(-element[re.findall('\w*', composant[0])[0]])
 
-        while not frontier.empty():
-            _, current = frontier.get()
-            floor, floor_plan = current
-            if floor == 3 and repr(floor_plan).startswith('[][][][][][]'):
-                break
+        return FloorPlan(floor_plan_list)
 
-            moves = self.generate_move(floor, floor_plan, 2) + self.generate_move(floor, floor_plan, 1)
-            for move in moves:
-                for direction in directions[floor]:
-                    new_floor_plan = self.apply_move(floor, direction, floor_plan, move)
-                    if (floor+direction, new_floor_plan) in cost_so_far:
-                        continue
-                    if not self.valid_floor(new_floor_plan.floor_plan[floor]):
-                        continue
-                    if not self.valid_floor(new_floor_plan.floor_plan[floor + direction]):
-                        continue
-                    new_cost = cost_so_far[current] + 1
-                    next = (floor + direction, new_floor_plan)
-                    if next not in cost_so_far or new_cost < cost_so_far[next]:
-                        cost_so_far[next] = new_cost
-                        priority = new_cost + self.heuristic(new_floor_plan, current, cost_so_far)
-                        frontier.put((priority, next))
-                        came_from[next] = current
+    def get_cost_of_shortest_path(self, floor_plan):
+        came_from, cost_so_far, current = self.a_star_search(self, (0, floor_plan), (3, '[][][][][][]'))
+        return cost_so_far[current]
 
-        return cost_so_far, came_from, current
+    def heuristic(self, current, next):
+        floor_plan = next[1]
+        return (len(floor_plan.floor_plan[3]['g']) + len(floor_plan.floor_plan[3]['m'])) * -10
+
+    def cost(self, current, next):
+        return 1
+
+    def neighbors(self, current):
+        floor, floor_plan = current
+        moves = self.generate_move(floor, floor_plan, 2) + self.generate_move(floor, floor_plan, 1)
+        neighbors = []
+        for move in moves:
+            for direction in self.directions[floor]:
+                new_floor_plan = self.apply_move(floor, direction, floor_plan, move)
+                if not self.valid_floor(new_floor_plan.floor_plan[floor]):
+                    continue
+                if not self.valid_floor(new_floor_plan.floor_plan[floor + direction]):
+                    continue
+                neighbors.append((floor + direction, new_floor_plan))
+        return neighbors
+
+    def search_until(self, current, goal):
+        floor, floor_plan = current
+        goal_floor, goal_floor_plan = goal
+        return floor == goal_floor and repr(floor_plan).startswith(goal_floor_plan)
 
     @staticmethod
     def generate_move(floor, floor_plan, count=2):
-        return list(itertools.combinations(floor_plan.floor_plan[floor]['g'] + floor_plan.floor_plan[floor]['m'], count))
+        return list(
+            itertools.combinations(floor_plan.floor_plan[floor]['g'] + floor_plan.floor_plan[floor]['m'], count))
 
     def apply_move(self, current_floor, direction, floor_plan, moves):
         new_floor_plan = FloorPlan(copy.deepcopy(floor_plan.floor_plan))

@@ -1,8 +1,6 @@
 from queue import PriorityQueue
 from abc import ABCMeta, abstractmethod
 
-__author__ = 'maubry'
-
 
 class AStarSearch(metaclass=ABCMeta):
     search_until_and_continue = False
@@ -23,7 +21,8 @@ class AStarSearch(metaclass=ABCMeta):
     def search_until(self, current, goal):
         pass
 
-    def a_star_search(self, graph, start, goal, ):
+    def a_star_search(self, graph, start, goal):
+        #
         frontier = PriorityQueue()
         current = (0, start)
         frontier.put(current)
