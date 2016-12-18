@@ -1,52 +1,60 @@
 import math
 from queue import PriorityQueue
+from src.AStarSearch import AStarSearch
 
-__author__ = 'maubry'
+MOVES = [[0, 1], [0, -1], [1, 0], [-1, 0]]
+
 WALL = '#'
 EMPTY = '_'
+PATH = 'O'
 
 
-class Day13(object):
-    def a_star_search(self, puzzle, destination, max_distance):
-        # A* from http://www.redblobgames.com/pathfinding/a-star/implementation.html#python-astar
-        frontier = PriorityQueue()
-        position = (1, 1)
-        current = (position, puzzle)
-        frontier.put((0, current))
-        came_from = {current: None}
-        cost_so_far = {current: 0}
-        heuristic = 0
-        list_position = set()
-        list_position.add((1, 1))
-        while not frontier.empty():
-            _, current = frontier.get()
-            position, puzzle = current
-            if position == destination:
-                break
+class Day13(AStarSearch):
+    puzzle_size = 0
 
-            moves = [[0, 1], [0, -1], [1, 0], [-1, 0]]
-            new_cost = cost_so_far[current] + 1
-            for move in moves:
-                new_position = (position[0] + move[0], position[1] + move[1])
-                if new_position[0] < 0 or new_position[1] < 0:
-                    continue
-                if puzzle[new_position[1] * self.get_puzzle_size(puzzle) + new_position[0]] in (WALL, 'O'):
-                    continue
-                if cost_so_far[current] < max_distance:
-                    list_position.add(new_position)
+    def shortest_path_cost(self, puzzle, goal):
+        self.puzzle_size = self.get_puzzle_size(puzzle)
+        came_from, cost_so_far, current = self.a_star_search(self, ((1, 1), puzzle), (goal, ''))
+        valid_end = sorted([cost for k, cost in cost_so_far.items() if k[0] == goal])
+        return valid_end[0]
 
-                new_puzzle = self.replace(puzzle, new_position)
+    def path_length_and_location_within_50_step(self, puzzle, goal):
+        self.puzzle_size = self.get_puzzle_size(puzzle)
+        came_from, cost_so_far, current = self.a_star_search(self, ((1, 1), puzzle), (goal, ''))
 
-                next = (new_position, new_puzzle)
-                if next not in cost_so_far or new_cost < cost_so_far[next]:
-                    cost_so_far[next] = new_cost
-                    priority = new_cost + heuristic
-                    frontier.put((priority, next))
-                    came_from[next] = current
+        path_length = sorted(set([cost for k, cost in cost_so_far.items() if k[0] == goal]))
+        position_with_50_distance = set([k[0] for k, cost in cost_so_far.items() if cost <= 50])
 
-        return cost_so_far, came_from, current, len(list_position)
+        return path_length[0], len(position_with_50_distance)
 
-    def build_puzzle(self, size, favorite_number=10):
+    def heuristic(self, current, next):
+        return 0
+
+    def cost(self, current, next):
+        return 1
+
+    def search_until(self, current, goal):
+        position, _ = current
+        goal_position, _ = goal
+        return position == goal_position
+
+    def neighbors(self, current):
+        position, puzzle = current
+        neighbors = []
+        for move in MOVES:
+            new_position = (position[0] + move[0], position[1] + move[1])
+            if new_position[0] < 0 or new_position[1] < 0 or new_position[0] >= self.puzzle_size or new_position[
+                1] >= self.puzzle_size:
+                continue
+            if puzzle[new_position[1] * self.puzzle_size + new_position[0]] in (WALL, PATH):
+                continue
+            new_puzzle = self.replace(puzzle, new_position)
+
+            neighbors.append((new_position, new_puzzle))
+
+        return neighbors
+
+    def build_puzzle(self, size, favorite_number):
         puzzle = ''.join([EMPTY for _ in range(size * size)])
         for i in range(size):
             for j in range(size):
@@ -70,7 +78,7 @@ class Day13(object):
 
     def replace(self, puzzle, move):
         size = self.get_puzzle_size(puzzle)
-        return puzzle[:move[1] * size + move[0]] + 'O' + puzzle[move[1] * size + move[0] + 1:]
+        return puzzle[:move[1] * size + move[0]] + PATH + puzzle[move[1] * size + move[0] + 1:]
 
     @staticmethod
     def get_puzzle_size(puzzle):

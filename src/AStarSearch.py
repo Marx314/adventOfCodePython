@@ -10,10 +10,6 @@ class AStarSearch(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def neighbors(self, current):
-        pass
-
-    @abstractmethod
     def cost(self, current, next):
         pass
 
@@ -21,8 +17,12 @@ class AStarSearch(metaclass=ABCMeta):
     def search_until(self, current, goal):
         pass
 
+    @abstractmethod
+    def neighbors(self, current):
+        pass
+
     def a_star_search(self, graph, start, goal):
-        #
+        #  A* from http://www.redblobgames.com/pathfinding/a-star/implementation.html#python-astar
         frontier = PriorityQueue()
         current = (0, start)
         frontier.put(current)
