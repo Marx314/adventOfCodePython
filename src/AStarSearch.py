@@ -6,7 +6,7 @@ class AStarSearch(metaclass=ABCMeta):
     search_until_and_continue = False
 
     @abstractmethod
-    def heuristic(self, current, next):
+    def heuristic(self, goal, next):
         pass
 
     @abstractmethod
