@@ -12,7 +12,7 @@ class Day11(AStarSearch):
     def generate_initial(self, instructions):
         floor_plan_list = [{'m': [], 'g': []} for _ in range(4)]
         element = {'hydrogen': 1, 'lithium': 2, 'thulium': 3, 'plutonium': 4, 'strontium': 5, 'promethium': 6,
-                   'ruthenium': 7}
+                   'ruthenium': 7, 'polonium': 8, 'cobalt': 9}
         for floor, instruction in enumerate(instructions):
             result = re.findall(r'((\w*\-?)*\s(microchip|generator))', instruction)
             for composant in result:
@@ -27,9 +27,9 @@ class Day11(AStarSearch):
         came_from, cost_so_far, current = self.a_star_search(self, (0, floor_plan), (3, '[][][][][][]'))
         return cost_so_far[current]
 
-    def heuristic(self, current, next):
+    def heuristic(self, goal, current, next):
         floor_plan = next[1]
-        return (len(floor_plan.floor_plan[3]['g']) + len(floor_plan.floor_plan[3]['m'])) * -10
+        return (len(floor_plan.floor_plan[3]['g']) + len(floor_plan.floor_plan[3]['m'])) * -20
 
     def cost(self, current, next):
         return 1
@@ -80,7 +80,6 @@ class Day11(AStarSearch):
         no_generator = len(generators) == 0
 
         return generators == microchips or no_generator or all([m in generators for m in microchips])
-
 
 class FloorPlan(object):
     def __init__(self, floor_plan):

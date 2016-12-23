@@ -27,7 +27,7 @@ class Day13(AStarSearch):
 
         return path_length[0], len(position_with_50_distance)
 
-    def heuristic(self, current, next):
+    def heuristic(self, goal, current, next):
         return 0
 
     def cost(self, current, next):

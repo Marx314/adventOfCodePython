@@ -1,4 +1,5 @@
 from unittest import TestCase
+import unittest
 from src.Year2016.Day11 import Day11
 
 
@@ -22,6 +23,7 @@ The fourth floor contains nothing relevant.'''
         result = self.day.get_cost_of_shortest_path(floor_plan)
         self.assertEqual(result, 31)
 
+    @unittest.skip('wait a minute')
     def test_puzzle_part2(self):
         floor_plan = self.day.generate_initial(self.puzzle())
         floor_plan.floor_plan[0]['g'].append(-1)

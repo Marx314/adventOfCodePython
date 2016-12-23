@@ -35,7 +35,7 @@ class Day17(AStarSearch):
         s = sorted(solutions, key=len)
         return len(s[-1]) - len(start[1]) + 1
 
-    def heuristic(self, goal, next):
+    def heuristic(self, goal, current, next):
         return 0
 
     def cost(self, current, next):

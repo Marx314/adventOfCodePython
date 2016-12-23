@@ -6,7 +6,7 @@ class AStarSearch(metaclass=ABCMeta):
     search_until_and_continue = False
 
     @abstractmethod
-    def heuristic(self, goal, next):
+    def heuristic(self, goal, current, next):
         pass
 
     @abstractmethod
@@ -33,17 +33,15 @@ class AStarSearch(metaclass=ABCMeta):
 
         while not frontier.empty():
             _, current = frontier.get()
-
             if self.search_until(current, goal):
                 if self.search_until_and_continue:
                     continue
                 break
-
             for next in graph.neighbors(current):
                 new_cost = cost_so_far[current] + graph.cost(current, next)
                 if next not in cost_so_far or new_cost < cost_so_far[next]:
                     cost_so_far[next] = new_cost
-                    priority = new_cost + self.heuristic(goal, next)
+                    priority = new_cost + self.heuristic(goal, current, next)
                     frontier.put((priority, next))
                     came_from[next] = current
 
