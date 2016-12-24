@@ -1,12 +1,12 @@
 import hashlib
-from src.AStarSearch import AStarSearch
+from src.AStarSearch import AStarSearch, AStarSearchGraph
 
 DOOR_OPEN = 'bcdef'
 OPEN = '1'
 CLOSED = '0'
 
 
-class Day17(AStarSearch):
+class Day17(AStarSearch, AStarSearchGraph):
     @staticmethod
     def first_four_from_md5(key):
         return hashlib.md5(key.encode('utf-8')).hexdigest()[0:4]

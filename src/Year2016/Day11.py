@@ -2,10 +2,10 @@ import itertools
 import re
 import copy
 from src import split_data
-from src.AStarSearch import AStarSearch
+from src.AStarSearch import AStarSearch, AStarSearchGraph
 
 
-class Day11(AStarSearch):
+class Day11(AStarSearch, AStarSearchGraph):
     directions = {0: [1], 1: [-1, 1], 2: [-1, 1], 3: [-1]}
 
     @split_data

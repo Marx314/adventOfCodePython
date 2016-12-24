@@ -10,15 +10,7 @@ class AStarSearch(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def cost(self, current, next):
-        pass
-
-    @abstractmethod
     def search_until(self, current, goal):
-        pass
-
-    @abstractmethod
-    def neighbors(self, current):
         pass
 
     def a_star_search(self, graph, start, goal):
@@ -46,3 +38,13 @@ class AStarSearch(metaclass=ABCMeta):
                     came_from[next] = current
 
         return came_from, cost_so_far, current
+
+
+class AStarSearchGraph(metaclass=ABCMeta):
+    @abstractmethod
+    def cost(current, next):
+        pass
+
+    @abstractmethod
+    def neighbors(self, current):
+        pass

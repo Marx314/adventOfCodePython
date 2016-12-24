@@ -1,6 +1,6 @@
 import math
 from queue import PriorityQueue
-from src.AStarSearch import AStarSearch
+from src.AStarSearch import AStarSearch, AStarSearchGraph
 
 MOVES = [[0, 1], [0, -1], [1, 0], [-1, 0]]
 
@@ -9,7 +9,7 @@ EMPTY = '_'
 PATH = 'O'
 
 
-class Day13(AStarSearch):
+class Day13(AStarSearch, AStarSearchGraph):
     puzzle_size = 0
 
     def shortest_path_cost(self, puzzle, goal):

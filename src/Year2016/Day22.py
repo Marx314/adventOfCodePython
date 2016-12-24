@@ -2,7 +2,7 @@ import functools
 import copy
 import re
 from src import split_data
-from src.AStarSearch import AStarSearch
+from src.AStarSearch import AStarSearch, AStarSearchGraph
 
 
 class Day22(object):
@@ -79,7 +79,7 @@ class Day22(object):
         file_system.fs[x][y] = old_node
 
 
-class PathFinding(AStarSearch):
+class PathFinding(AStarSearch, AStarSearchGraph):
     def neighbors(self, current):
         moves = []
         x, y = current.find_empty()
