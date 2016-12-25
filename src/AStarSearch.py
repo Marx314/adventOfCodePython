@@ -42,7 +42,7 @@ class AStarSearch(metaclass=ABCMeta):
 
 class AStarSearchGraph(metaclass=ABCMeta):
     @abstractmethod
-    def cost(current, next):
+    def cost(self, current, next):
         pass
 
     @abstractmethod
