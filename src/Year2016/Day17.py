@@ -1,5 +1,6 @@
 import hashlib
-from src.AStarSearch import AStarSearch, AStarSearchGraph
+from src.AStarSearch import AStarSearch
+from src.AStarSearch import AStarSearchGraph
 
 DOOR_OPEN = 'bcdef'
 OPEN = '1'

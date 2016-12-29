@@ -12,7 +12,9 @@ class Day24Test(TestCase):
 
     def test_puzzle(self):
         self.assertEqual(self.day.find_lowest_cost(self.puzzle()), 490)
-        self.assertEqual(self.day.find_lowest_cost_finishing_at_0(self.puzzle()), 744)
+
+    def test_puzzle_part2(self):
+        self.assertEqual(self.day.find_lowest_cost(self.puzzle(), '0'), 744)
 
     @staticmethod
     def base():

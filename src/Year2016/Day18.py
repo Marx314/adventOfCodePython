@@ -1,4 +1,3 @@
-__author__ = 'maubry'
 TRAP = '^'
 SAFE = '.'
 TRAPS = [[TRAP, TRAP, SAFE], [SAFE, TRAP, TRAP], [TRAP, SAFE, SAFE], [SAFE, SAFE, TRAP]]

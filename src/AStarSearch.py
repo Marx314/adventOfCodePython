@@ -1,5 +1,6 @@
+from abc import ABCMeta
+from abc import abstractmethod
 from queue import PriorityQueue
-from abc import ABCMeta, abstractmethod
 
 
 class AStarSearch(metaclass=ABCMeta):

@@ -1,6 +1,6 @@
 import math
-from queue import PriorityQueue
-from src.AStarSearch import AStarSearch, AStarSearchGraph
+from src.AStarSearch import AStarSearch
+from src.AStarSearch import AStarSearchGraph
 
 MOVES = [[0, 1], [0, -1], [1, 0], [-1, 0]]
 

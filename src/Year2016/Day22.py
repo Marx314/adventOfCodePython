@@ -2,7 +2,8 @@ import functools
 import copy
 import re
 from src import split_data
-from src.AStarSearch import AStarSearch, AStarSearchGraph
+from src.AStarSearch import AStarSearch
+from src.AStarSearch import AStarSearchGraph
 
 
 class Day22(object):

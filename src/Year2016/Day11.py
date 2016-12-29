@@ -1,8 +1,9 @@
+import copy
 import itertools
 import re
-import copy
 from src import split_data
-from src.AStarSearch import AStarSearch, AStarSearchGraph
+from src.AStarSearch import AStarSearch
+from src.AStarSearch import AStarSearchGraph
 
 
 class Day11(AStarSearch, AStarSearchGraph):
@@ -80,6 +81,7 @@ class Day11(AStarSearch, AStarSearchGraph):
         no_generator = len(generators) == 0
 
         return generators == microchips or no_generator or all([m in generators for m in microchips])
+
 
 class FloorPlan(object):
     def __init__(self, floor_plan):
