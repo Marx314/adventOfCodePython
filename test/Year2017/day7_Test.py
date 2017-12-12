@@ -20,7 +20,8 @@ class Day7:
 
             tower[name] = {
                 'weight': weight,
-                'discs': []
+                'discs': [],
+                'childs': {},
             }
             if len(info) > 2:
                 discs = [k.replace(',', '') for k in info[3:]]
@@ -46,21 +47,19 @@ class Day7:
 
         return tower
 
-    def is_program_balaced(self, tower, name):
-        if 'childs' in tower:
-            current_weights = [(child, tower['childs'][child]['total_weight'], tower['childs'][child]['weight']) for child in tower['childs']]
-            current_weights.sort(key=lambda x: x[1])
-            if current_weights[-2][1] != current_weights[-1][1]:
-                equal = self.is_program_balaced(tower['childs'][current_weights[-1][0]], current_weights[-1][0])
-                if equal:
-                    message = '{} should weight {} instead of {}'.format(
-                        name, current_weights[-1][2] - (current_weights[-1][1] - current_weights[-2][1]), current_weights[-1][2]
-                    )
-                    raise UnBalanced(message)
-                return False
-            else:
-                return True
-        return True
+    def is_tower_balanced(self, tower, name):
+        expected = None
+        childs = sorted([child for child in tower['childs']], key=lambda x: tower['childs'][x]['weight'])
+        for node in childs:
+            weight = self.is_tower_balanced(tower['childs'][node], node)
+            if expected is None:
+                expected = weight
+            elif expected != weight:
+                expected_node_weight = tower['childs'][node]['weight'] - (tower['childs'][node]['total_weight'] - expected)
+                message = '{} should weight {} instead of {}'.format(name, expected_node_weight, tower['childs'][node]['weight'])
+                raise UnBalanced(message)
+
+        return tower['total_weight']
 
 
 class Day7Test(TestCase):
@@ -91,7 +90,7 @@ cntj (57)'''
         tower = self.day.build_tower(self.simple_program())
         parent = next(iter(tower.keys()))
         with self.assertRaises(UnBalanced) as context:
-            self.day.is_program_balaced(tower[parent], parent)
+            self.day.is_tower_balanced(tower[parent], parent)
         self.assertEqual(context.exception.message, 'tknk should weight 60 instead of 68')
 
     def test_puzzle(self):
@@ -103,7 +102,7 @@ cntj (57)'''
         tower = self.day.build_tower(self.puzzle())
         parent = next(iter(tower.keys()))
         with self.assertRaises(UnBalanced) as context:
-            self.day.is_program_balaced(tower[parent], parent)
+            self.day.is_tower_balanced(tower[parent], parent)
         self.assertEqual(context.exception.message, 'fbtzaic should weight 391 instead of 396')
 
     def puzzle(self):
