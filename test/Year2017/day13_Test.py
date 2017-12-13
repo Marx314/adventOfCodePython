@@ -47,7 +47,6 @@ class Day13Test(TestCase):
         self.assertEqual(get_delay_to_pass_firewall(sample), 10)
 
     def test_puzzle(self):
-        self.assertTrue(get_severity(self.puzzle()) < 2756)
         self.assertEqual(get_severity(self.puzzle()), 1728)
         self.assertEqual(get_delay_to_pass_firewall(self.puzzle()), 3946838)
 
