@@ -1,7 +1,5 @@
 from unittest import TestCase
 
-jump = 328
-
 
 def spinlock(step, size):
     result = [0]

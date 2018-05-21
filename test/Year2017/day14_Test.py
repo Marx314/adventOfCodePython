@@ -60,7 +60,7 @@ class Day14Test(TestCase):
         partition = generate_partition(self.puzzle(), 128)
 
         self.assertEqual(partition.count('#'), 8106)
-        self.assertEqual(region_count(partition), 1242)
+        self.assertEqual(region_count(partition), 1164)
 
     def puzzle(self):
         return '''oundnydw'''
